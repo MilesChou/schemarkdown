@@ -17,13 +17,14 @@
     "require": {
         "php": ">=7.1",
         "doctrine/dbal": "^2.6",
-        "illuminate/container": "^5.6 | ^6 | ^7 | ^8",
         "illuminate/database": "^5.6 | ^6 | ^7 | ^8",
+        "illuminate/events": "^5.6 | ^6 | ^7 | ^8",
         "illuminate/support": "^5.6 | ^6 | ^7 | ^8",
         "illuminate/view": "^5.6 | ^6 | ^7 | ^8",
         "mileschou/codegener": "^1.0.2"
     },
     "require-dev": {
+        "illuminate/container": "^5.6 | ^6 | ^7 | ^8",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^7.5 | ^8.5 | ^9",
         "psy/psysh": "^0.10",

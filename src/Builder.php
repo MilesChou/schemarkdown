@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MilesChou\Schemarkdown;
 
 use Doctrine\DBAL\DBALException;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Events\Dispatcher as Events;
+use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use MilesChou\Schemarkdown\Events\BuildingConnection;
+use MilesChou\Schemarkdown\Events\BuildingReadme;
+use MilesChou\Schemarkdown\Events\BuildingSchema;
 use MilesChou\Schemarkdown\Models\Schema;
 use MilesChou\Schemarkdown\Models\Table;
 use Psr\Log\LoggerInterface;
@@ -24,24 +29,32 @@ class Builder
     private $databaseManager;
 
     /**
+     * @var Events
+     */
+    private $events;
+
+    /**
      * @var bool
      */
     private $withConnectionNamespace;
 
     /**
-     * @var LoggerInterface
+     * @var View
      */
-    private $logger;
+    private $view;
 
     /**
-     * @param Container $container
      * @param DatabaseManager $databaseManager
+     * @param View $view
+     * @param Events $events
+     * @param array $connections
      */
-    public function __construct(Container $container, DatabaseManager $databaseManager)
+    public function __construct(DatabaseManager $databaseManager, View $view, Events $events, array $connections)
     {
         $this->databaseManager = $databaseManager;
-        $this->connections = $container['config']['database.connections'];
-        $this->logger = $container->make('log');
+        $this->view = $view;
+        $this->events = $events;
+        $this->connections = $connections;
         $this->withConnectionNamespace = count($this->connections) > 1;
     }
 
@@ -52,7 +65,7 @@ class Builder
     public function build(): iterable
     {
         foreach (array_keys($this->connections) as $connection) {
-            $this->logger->info("Build connection '{$connection}' to markdown ...");
+            $this->events->dispatch(new BuildingConnection($connection));
 
             yield from $this->buildConnection($connection);
         }
@@ -86,18 +99,18 @@ class Builder
 
         $relativePath = $this->createReadmePath($connection);
 
-        $this->logger->info("Build readme markdown '{$relativePath}' ...");
+        $this->events->dispatch(new BuildingReadme($relativePath));
 
-        yield $relativePath => View::make('schema', [
+        yield $relativePath => $this->view->make('schemarkdown::schema', [
             'schema' => new Schema($schemaManager, $databaseConnection->getDatabaseName()),
         ])->render();
 
         foreach ($schemaManager->listTableNames() as $tableName) {
             $relativePath = $this->createRelativePath($connection, $tableName);
 
-            $this->logger->info("Build schema markdown '{$relativePath}' ...");
+            $this->events->dispatch(new BuildingSchema($relativePath));
 
-            yield $relativePath => View::make('table', [
+            yield $relativePath => $this->view->make('schemarkdown::table', [
                 'table' => new Table(
                     $schemaManager->listTableDetails($tableName),
                     $databaseConnection->getDatabaseName()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MilesChou\Schemarkdown\Models;
 
 use Doctrine\DBAL\Schema\Column as DoctrineColumn;
