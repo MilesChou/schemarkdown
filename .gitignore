@@ -39,8 +39,12 @@ Desktop.ini
 # Config files
 /phpunit.xml
 
-# Cache files
-/.phpunit.result.cache
-
 # Artifacts files
 /build
+/generated
+/src/Version.php
+/.phpunit.result.cache
+/schemarkdown.phar
+
+# Tesing files
+/tests/Fixtures/sqlite.db

@@ -1,29 +1,44 @@
 {
-    "name": "mileschou/composer-template",
-    "description": "The template for create Composer project",
+    "name": "mileschou/schemarkdown",
+    "description": "The schema document generator",
     "type": "library",
     "license": "MIT",
     "keywords": [
-        "template"
+        "laravel", "database"
     ],
     "authors": [
         {
             "name": "MilesChou",
             "email": "jangconan@gmail.com",
+            "homepage": "https://mileschou.github.io/",
             "role": "Maintainer"
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": ">=7.1",
+        "doctrine/dbal": "^2.6",
+        "illuminate/console": "^5.6 | ^6 | ^7",
+        "illuminate/database": "^5.6 | ^6 | ^7",
+        "illuminate/events": "^5.6 | ^6 | ^7",
+        "illuminate/filesystem": "^5.6 | ^6 | ^7",
+        "illuminate/log": "^5.6 | ^6 | ^7",
+        "illuminate/view": "^5.6 | ^6 | ^7",
+        "laravel-bridge/scratch": "^1.0",
+        "mikey179/vfsstream": "^1.6",
+        "mileschou/codegener": "^1.0.2",
+        "monolog/monolog": "^1.25 | ^2",
+        "symfony/yaml": "^4 | ^5",
+        "vlucas/phpdotenv": "^3"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": "^7.5 | ^8",
+        "phpunit/phpunit": "^7.5",
+        "psy/psysh": "^0.9.12",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
-            "MilesChou\\Template\\": "src"
+            "MilesChou\\Schemarkdown\\": "src"
         }
     },
     "autoload-dev": {
