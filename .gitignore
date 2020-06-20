@@ -44,7 +44,6 @@ Desktop.ini
 /generated
 /src/Version.php
 /.phpunit.result.cache
-/schemarkdown.phar
 
 # Tesing files
 /tests/Fixtures/sqlite.db

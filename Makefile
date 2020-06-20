@@ -1,20 +1,16 @@
 #!/usr/bin/make -f
 
-INSTALL_PATH := /usr/local/bin/schemarkdown
-
-.PHONY: all clean clean-all check test analyse coverage container sqlite examples
+.PHONY: all clean clean-all check test analyse coverage container sqlite
 
 # ---------------------------------------------------------------------
 
-all: clean test analyse schemarkdown.phar
+all: clean test analyse
 
 clean:
 	rm -rf ./build
-	rm -f schemarkdown.phar
 
 clean-all: clean
 	rm -rf ./vendor
-	rm -rf ./composer.lock
 
 check:
 	php vendor/bin/phpcs
@@ -33,20 +29,5 @@ container:
 	@docker-compose up -d
 	@docker-compose logs -f
 
-schemarkdown.phar:
-	@echo ">>> Building phar ..."
-	@composer install --no-dev --optimize-autoloader --quiet
-	@./scripts/bump-version ${VERSION}
-	@php -d phar.readonly=off ./scripts/build
-	@chmod +x schemarkdown.phar
-	@echo ">>> Build phar finished."
-	@composer install --dev --quiet
-
 sqlite:
 	@sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql
-
-examples:
-	php bin/schemarkdown.php --config-file=tests/Fixtures/database.php --output-dir=examples
-
-install:
-	mv schemarkdown.phar ${INSTALL_PATH}
