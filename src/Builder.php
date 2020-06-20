@@ -44,17 +44,16 @@ class Builder
     private $view;
 
     /**
-     * @param DatabaseManager $databaseManager
+     * @param DatabaseManager $databaseManager The manager has been connected
      * @param View $view
      * @param Events $events
-     * @param array $connections
      */
-    public function __construct(DatabaseManager $databaseManager, View $view, Events $events, array $connections)
+    public function __construct(DatabaseManager $databaseManager, View $view, Events $events)
     {
         $this->databaseManager = $databaseManager;
         $this->view = $view;
         $this->events = $events;
-        $this->connections = $connections;
+        $this->connections = array_keys($databaseManager->getConnections());
         $this->withConnectionNamespace = count($this->connections) > 1;
     }
 
@@ -64,7 +63,7 @@ class Builder
      */
     public function build(): iterable
     {
-        foreach (array_keys($this->connections) as $connection) {
+        foreach ($this->connections as $connection) {
             $this->events->dispatch(new BuildingConnection($connection));
 
             yield from $this->buildConnection($connection);
