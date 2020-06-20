@@ -96,20 +96,20 @@ class Builder
 
         $schemaManager = $doctrineConnection->getSchemaManager();
 
-        $relativePath = $this->createReadmePath($connection);
+        $filename = $this->createReadmePath($connection);
 
-        $this->events->dispatch(new BuildingReadme($relativePath));
+        $this->events->dispatch(new BuildingReadme($filename));
 
-        yield $relativePath => $this->view->make('schemarkdown::schema', [
+        yield $filename => $this->view->make('schemarkdown::schema', [
             'schema' => new Schema($schemaManager, $databaseConnection->getDatabaseName()),
         ])->render();
 
         foreach ($schemaManager->listTableNames() as $tableName) {
-            $relativePath = $this->createRelativePath($connection, $tableName);
+            $filename = $this->createRelativePath($connection, $tableName);
 
-            $this->events->dispatch(new BuildingSchema($relativePath));
+            $this->events->dispatch(new BuildingSchema($filename));
 
-            yield $relativePath => $this->view->make('schemarkdown::table', [
+            yield $filename => $this->view->make('schemarkdown::table', [
                 'table' => new Table(
                     $schemaManager->listTableDetails($tableName),
                     $databaseConnection->getDatabaseName()
