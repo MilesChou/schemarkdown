@@ -20,7 +20,7 @@ return (static function () {
         ->bootstrap();
 
     $app = new IlluminateApplication($container, $container->make('events'), 'dev-master');
-    $app->add(new SchemarkdownCommand($container));
+    $app->add(new SchemarkdownCommand());
     $app->setDefaultCommand('schemarkdown');
 
     return $app;

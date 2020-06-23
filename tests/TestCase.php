@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Console\Application;
 use Illuminate\Container\Container;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -36,9 +37,12 @@ class TestCase extends \PHPUnit\Framework\TestCase
         parent::tearDown();
     }
 
-    protected function createContainer(): Container
+    protected function createContainer()
     {
-        return Container::getInstance();
+        /** @var Application $app */
+        $app = require __DIR__ . '/../bootstrap/app.php';
+
+        return $app->getLaravel();
     }
 
     /**

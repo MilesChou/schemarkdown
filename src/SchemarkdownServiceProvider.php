@@ -8,7 +8,7 @@ use MilesChou\Schemarkdown\Console\SchemarkdownCommand;
 
 class SchemarkdownServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    public function boot()
+    public function register()
     {
         $this->registerViews();
         $this->registerCommand();
