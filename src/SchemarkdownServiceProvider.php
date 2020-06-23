@@ -4,7 +4,7 @@ namespace MilesChou\Schemarkdown;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use MilesChou\Schemarkdown\Console\GenerateCommand;
+use MilesChou\Schemarkdown\Console\SchemarkdownCommand;
 
 class SchemarkdownServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -21,9 +21,7 @@ class SchemarkdownServiceProvider extends ServiceProvider implements DeferrableP
 
     private function registerCommand(): void
     {
-        $this->app->singleton('command.schemarkdown', function () {
-            return new GenerateCommand($this->app, 'schemarkdown');
-        });
+        $this->app->singleton('command.schemarkdown', SchemarkdownCommand::class);
 
         $this->commands(['command.schemarkdown']);
     }

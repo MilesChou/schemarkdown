@@ -17,6 +17,7 @@
     "require": {
         "php": ">=7.1",
         "doctrine/dbal": "^2.6",
+        "illuminate/console": "^5.6 | ^6 | ^7 | ^8",
         "illuminate/database": "^5.6 | ^6 | ^7 | ^8",
         "illuminate/events": "^5.6 | ^6 | ^7 | ^8",
         "illuminate/support": "^5.6 | ^6 | ^7 | ^8",
@@ -25,6 +26,8 @@
     },
     "require-dev": {
         "illuminate/container": "^5.6 | ^6 | ^7 | ^8",
+        "laravel-bridge/scratch": "^1.2",
+        "mikey179/vfsstream": "^1.6",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^7.5 | ^8.5 | ^9",
         "psy/psysh": "^0.10",

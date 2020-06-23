@@ -8,26 +8,6 @@ use RuntimeException;
 trait DatabaseConnection
 {
     /**
-     * @param array $connections
-     * @param null|string $connection
-     * @return array
-     */
-    protected function filterConnection(array $connections, $connection = null): array
-    {
-        if (null === $connection) {
-            return $connections;
-        }
-
-        if (empty($connections[$connection])) {
-            throw new RuntimeException("Connection '{$connection}' is not found in config file");
-        }
-
-        return [
-            $connection => $connections[$connection],
-        ];
-    }
-
-    /**
      * @param string $configFile
      * @return array
      */
