@@ -3,7 +3,6 @@
 namespace MilesChou\Schemarkdown\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use MilesChou\Codegener\Traits\Path;
 use MilesChou\Codegener\Writer;
@@ -18,6 +17,11 @@ class SchemarkdownCommand extends Command
      * @var string
      */
     protected $name = 'schemarkdown';
+
+    /**
+     * @var string
+     */
+    protected $description = 'Generate Markdown document from database schema';
 
     /**
      * @var string
