@@ -19,7 +19,33 @@ composer require mileschou/schemarkdown
 
 ## Usage
 
-Coming soon...
+Use following command to generate schema documents:
+
+```bash
+php artisan schemarkdown
+```
+
+Schema document will store in `generated` directory default. Use the `--output-dir` option to change.
+
+In the other framework, you must provide config file like Laravel. Use `--config-file` option to specify customize config file.
+
+This tool will load `.env` before load config. Use the `--env` option to specify .env path. 
+
+Use the `--connection` option to specify **connection name** in Laravel config to generate documents of one database.
+
+## Example
+
+Here is example [SQL](/examples/examples.sql), import MySQL and run following command:
+
+```
+php artisan schemarkdown --config-file=tests/Fixtures/database.php --connection=examples --output-dir=examples
+```
+
+It will generate this [Markdown documents](/examples).
+
+## Troubleshooting
+
+Use `-vv` option to see info log.
 
 ## License
 
