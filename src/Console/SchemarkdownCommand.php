@@ -30,7 +30,7 @@ class SchemarkdownCommand extends Command
                                 {--memory-limit=-1 : MEMORY_LIMIT config}
                                 {--config-file=config/database.php : Config file}
                                 {--connection= : Connection name will only build}
-                                {--output-dir=generated : Relative path with getcwd()}
+                                {--output-dir=docs/schema : Relative path with getcwd()}
                                 {--overwrite : Overwrite the exist file}';
 
     public function handle()
