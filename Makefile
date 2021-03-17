@@ -4,7 +4,7 @@
 
 # ---------------------------------------------------------------------
 
-all: clean test analyse
+all: test
 
 clean:
 	rm -rf ./build
@@ -18,8 +18,8 @@ check:
 test: clean check
 	phpdbg -qrr vendor/bin/phpunit
 
-analyse:
-	php vendor/bin/phpstan analyse src --level=5
+test-fast: clean
+	phpdbg -qrr vendor/bin/phpunit
 
 coverage: test
 	@if [ "`uname`" = "Darwin" ]; then open build/coverage/index.html; fi

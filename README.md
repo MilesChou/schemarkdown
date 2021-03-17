@@ -1,6 +1,6 @@
 # Schemarkdown
 
-[![Build Status](https://travis-ci.com/MilesChou/schemarkdown.svg?branch=master)](https://travis-ci.com/MilesChou/schemarkdown)
+[![tests](https://github.com/MilesChou/schemarkdown/actions/workflows/tests.yml/badge.svg)](https://github.com/MilesChou/schemarkdown/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/MilesChou/schemarkdown/branch/master/graph/badge.svg)](https://codecov.io/gh/MilesChou/schemarkdown)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/67591518c2cd4c12bb73004998d08e29)](https://www.codacy.com/manual/MilesChou/schemarkdown)
 [![Latest Stable Version](https://poser.pugx.org/MilesChou/schemarkdown/v/stable)](https://packagist.org/packages/MilesChou/schemarkdown)

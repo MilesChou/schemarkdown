@@ -2,9 +2,7 @@ version: "3"
 
 services:
   mysql:
-    image: mysql:8
-    container_name: mysql
-    hostname: mysql
+    image: mariadb:10
     volumes:
       - ./tests/Fixtures/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
       - ./examples/examples.sql:/docker-entrypoint-initdb.d/examples.sql
@@ -15,8 +13,6 @@ services:
 
   postgres:
     image: postgres:10-alpine
-    container_name: postgres
-    hostname: postgres
     volumes:
       - ./tests/Fixtures/postgres.sql:/docker-entrypoint-initdb.d/postgres.sql
     ports:

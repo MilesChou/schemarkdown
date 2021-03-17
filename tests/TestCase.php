@@ -23,7 +23,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->root = vfsStream::setup();
+        $this->root = vfsStream::setup('test');
 
         $this->putConfigFileWithVfs();
 
@@ -55,12 +55,12 @@ class TestCase extends \PHPUnit\Framework\TestCase
             $config = ['connections' => $config];
         }
 
-        $fullPath = $this->root->url() . '/config/database.php';
+        $filename = $this->root->url() . $path;
 
-        mkdir(dirname($fullPath), 0777, true);
+        mkdir(dirname($filename), 0777, true);
 
         $code = '<?php return ' . var_export($config, true) . ';';
 
-        file_put_contents($this->root->url() . $path, $code);
+        file_put_contents($filename, $code);
     }
 }

@@ -6,14 +6,13 @@ use MilesChou\Codegener\CodegenerServiceProvider;
 use MilesChou\Schemarkdown\Console\SchemarkdownCommand;
 use MilesChou\Schemarkdown\SchemarkdownServiceProvider;
 use org\bovigo\vfs\vfsStream;
+use VirtualFileSystem\FileSystem as Vfs;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 return (static function () {
-    $vfs = vfsStream::setup('view');
-
     $container = (new LaravelBridge())
-        ->setupViewCompiledPath($vfs->url())
+        ->setupViewCompiledPath(vfsStream::setup('view')->url())
         ->setupProvider(CodegenerServiceProvider::class)
         ->setupProvider(SchemarkdownServiceProvider::class)
         ->withFacades()

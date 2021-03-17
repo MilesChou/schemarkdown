@@ -2,11 +2,10 @@
 
 namespace MilesChou\Schemarkdown;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use MilesChou\Schemarkdown\Console\SchemarkdownCommand;
 
-class SchemarkdownServiceProvider extends ServiceProvider implements DeferrableProvider
+class SchemarkdownServiceProvider extends ServiceProvider
 {
     public function register()
     {
