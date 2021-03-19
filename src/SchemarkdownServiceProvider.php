@@ -2,8 +2,13 @@
 
 namespace MilesChou\Schemarkdown;
 
+use Illuminate\Console\Events\ArtisanStarting;
+use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use MilesChou\Schemarkdown\Console\SchemarkdownCommand;
+use MilesChou\Schemarkdown\Console\SchemaMarkdownCommand;
+use MilesChou\Schemarkdown\Listeners\InitializeCommandOptions;
+use MilesChou\Schemarkdown\Listeners\InitializeConnection;
 
 class SchemarkdownServiceProvider extends ServiceProvider
 {
@@ -13,6 +18,12 @@ class SchemarkdownServiceProvider extends ServiceProvider
         $this->registerCommand();
     }
 
+    public function boot()
+    {
+        Event::listen(ArtisanStarting::class, InitializeCommandOptions::class);
+        Event::listen(CommandStarting::class, InitializeConnection::class);
+    }
+
     private function registerViews(): void
     {
         $this->loadViewsFrom(__DIR__ . '/templates', 'schemarkdown');
@@ -20,7 +31,7 @@ class SchemarkdownServiceProvider extends ServiceProvider
 
     private function registerCommand(): void
     {
-        $this->app->singleton('command.schemarkdown', SchemarkdownCommand::class);
+        $this->app->singleton('command.schemarkdown', SchemaMarkdownCommand::class);
 
         $this->commands(['command.schemarkdown']);
     }

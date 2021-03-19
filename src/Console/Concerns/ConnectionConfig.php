@@ -5,7 +5,7 @@ namespace MilesChou\Schemarkdown\Console\Concerns;
 use Illuminate\Support\Fluent;
 use RuntimeException;
 
-trait DatabaseConnection
+trait ConnectionConfig
 {
     /**
      * @param string $configFile

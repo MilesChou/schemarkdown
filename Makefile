@@ -8,6 +8,7 @@ all: test
 
 clean:
 	rm -rf ./build
+	rm -rf ./generated
 
 clean-all: clean
 	rm -rf ./vendor

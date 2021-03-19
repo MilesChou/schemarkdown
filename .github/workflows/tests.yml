@@ -83,7 +83,7 @@ jobs:
         run: phpdbg -qrr vendor/bin/phpunit
 
       - name: Execute App tests
-        run: php bin/schemarkdown.php --config-file=tests/Fixtures/database.php
+        run: php bin/schemarkdown.php schema:markdown --config-file=tests/Fixtures/database.php
 
       - name: Code coverage
         uses: codecov/codecov-action@v1
