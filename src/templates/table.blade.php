@@ -1,7 +1,7 @@
 <?php
 /** @var \MilesChou\Schemarkdown\Models\Table $table */
 ?>
-# Table `{{ $table->database() }}.{{ $table->table() }}`
+# Table `{{ $table->database() }}.{{ $table->getName() }}`
 
 {{ $table->comment() }}
 

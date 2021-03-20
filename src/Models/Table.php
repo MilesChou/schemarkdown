@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace MilesChou\Schemarkdown\Models;
 
-use Doctrine\DBAL\Schema\Column as DoctrineColumn;
-use Doctrine\DBAL\Schema\Index as DoctrineIndex;
+use BadMethodCallException;
 use Doctrine\DBAL\Schema\Table as DoctrineTable;
+use Illuminate\Support\Collection;
 
+/**
+ * @mixin DoctrineTable
+ */
 class Table
 {
     /**
@@ -18,30 +21,39 @@ class Table
     /**
      * @var DoctrineTable
      */
-    private $table;
+    private $DoctrineTable;
 
     /**
-     * @param DoctrineTable $table
+     * @param DoctrineTable $doctrineTable
      * @param string $database
      */
-    public function __construct(DoctrineTable $table, string $database)
+    public function __construct(DoctrineTable $doctrineTable, string $database)
     {
-        $this->table = $table;
+        $this->DoctrineTable = $doctrineTable;
         $this->database = $database;
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this->DoctrineTable, $name)) {
+            return $this->DoctrineTable->$name(...$arguments);
+        }
+
+        throw new BadMethodCallException('Undefined method ' . $name . ' in class ' . static::class);
     }
 
     public function comment(): string
     {
         // Workaround for PHP 7.1
-        return $this->table->hasOption('comment') ? $this->table->getOption('comment') : '';
+        return $this->DoctrineTable->hasOption('comment') ? $this->DoctrineTable->getOption('comment') : '';
     }
 
     /**
-     * @return DoctrineColumn[]
+     * @return Collection
      */
-    public function columns(): iterable
+    public function columns(): Collection
     {
-        return collect($this->table->getColumns())->transform(function ($value) {
+        return collect($this->DoctrineTable->getColumns())->transform(function ($value) {
             return new Column($value);
         });
     }
@@ -57,22 +69,12 @@ class Table
     }
 
     /**
-     * @return DoctrineIndex[]
+     * @return Collection
      */
-    public function indexes(): iterable
+    public function indexes(): Collection
     {
-        return collect($this->table->getIndexes())->transform(function ($value) {
+        return collect($this->DoctrineTable->getIndexes())->transform(function ($value) {
             return new Index($value);
         });
-    }
-
-    /**
-     * Table name
-     *
-     * @return string
-     */
-    public function table(): string
-    {
-        return $this->table->getName();
     }
 }

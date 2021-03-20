@@ -59,7 +59,7 @@ class MarkdownGenerator
         foreach ($connections as $name => $connection) {
             $this->events->dispatch(new BuildingConnection($name, $connection));
 
-            yield from $this->buildConnection($name, $connection, $withConnectionNamespace);
+            yield from $this->buildDocs($name, $connection, $withConnectionNamespace);
         }
     }
 
@@ -70,7 +70,7 @@ class MarkdownGenerator
      * @return iterable
      * @throws \Doctrine\DBAL\Exception
      */
-    private function buildConnection(string $name, Connection $connection, bool $withConnectionNamespace): iterable
+    private function buildDocs(string $name, Connection $connection, bool $withConnectionNamespace): iterable
     {
         $schemaManager = $this->resolveSchemaManger($connection);
 

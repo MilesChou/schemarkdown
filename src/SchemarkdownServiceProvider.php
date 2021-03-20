@@ -6,7 +6,9 @@ use Illuminate\Console\Events\ArtisanStarting;
 use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Factory;
 use MilesChou\Schemarkdown\Console\SchemaMarkdownCommand;
+use MilesChou\Schemarkdown\Engines\TemplateEngine;
 use MilesChou\Schemarkdown\Listeners\InitializeCommandOptions;
 use MilesChou\Schemarkdown\Listeners\InitializeConnection;
 
@@ -27,6 +29,12 @@ class SchemarkdownServiceProvider extends ServiceProvider
     private function registerViews(): void
     {
         $this->loadViewsFrom(__DIR__ . '/templates', 'schemarkdown');
+
+        $this->app->afterResolving('view', function (Factory $view) {
+            $view->addExtension('txt', 'text', function () {
+                return $this->app->make(TemplateEngine::class);
+            });
+        });
     }
 
     private function registerCommand(): void

@@ -2,8 +2,11 @@
 
 namespace Tests;
 
+use Doctrine\DBAL\Schema\Column as DoctrineColumn;
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Console\Application;
 use Illuminate\Container\Container;
+use MilesChou\Schemarkdown\Models\Column;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
@@ -62,5 +65,17 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $code = '<?php return ' . var_export($config, true) . ';';
 
         file_put_contents($filename, $code);
+    }
+
+    protected function createColumn(string $field, string $type, array $options = []): Column
+    {
+        return new Column(new DoctrineColumn($field, Type::getType($type), $options));
+    }
+
+    protected function createColumns(array $fields): array
+    {
+        return array_map(function ($k, $v) {
+            return $this->createColumn($k, $v);
+        }, array_keys($fields), $fields);
     }
 }
