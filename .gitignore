@@ -40,10 +40,10 @@ Desktop.ini
 /phpunit.xml
 
 # Artifacts files
+/app
 /build
-/generated
+/docs
 .phpunit.result.cache
 
 # Tesing files
-/app
 /tests/Fixtures/sqlite.db

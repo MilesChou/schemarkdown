@@ -3,7 +3,6 @@
 namespace MilesChou\Schemarkdown\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Database\DatabaseManager;
 use MilesChou\Codegener\Traits\Path;
 use MilesChou\Codegener\Writer;
 use MilesChou\Schemarkdown\Schema\ModelGenerator;

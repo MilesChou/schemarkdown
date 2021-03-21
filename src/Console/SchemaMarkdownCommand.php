@@ -3,7 +3,6 @@
 namespace MilesChou\Schemarkdown\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Database\DatabaseManager;
 use MilesChou\Codegener\Traits\Path;
 use MilesChou\Codegener\Writer;
 use MilesChou\Schemarkdown\Schema\MarkdownGenerator;
@@ -23,7 +22,7 @@ class SchemaMarkdownCommand extends Command
      */
     protected $signature = 'schema:markdown
                                 {--memory-limit=-1 : MEMORY_LIMIT config}
-                                {--output-dir=generated/markdown : Relative path with getcwd()}
+                                {--output-dir=docs/schema : Relative path with getcwd()}
                                 {--overwrite : Overwrite the exist file}';
 
     public function handle(MarkdownGenerator $generator): int
