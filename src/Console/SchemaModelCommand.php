@@ -22,9 +22,11 @@ class SchemaModelCommand extends Command
      */
     protected $signature = 'schema:model
                                 {--memory-limit=-1 : MEMORY_LIMIT config}
+                                {--connection= : Connection name will only build}
                                 {--output-dir=app/Models : Relative path with getcwd()}
                                 {--namespace=App/Models : Namespace prefix}
-                                {--overwrite : Overwrite the exist file}';
+                                {--overwrite : Overwrite the exist file}
+                                ';
 
     public function handle(ModelGenerator $builder, Writer $writer)
     {

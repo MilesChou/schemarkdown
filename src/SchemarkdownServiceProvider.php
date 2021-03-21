@@ -2,15 +2,11 @@
 
 namespace MilesChou\Schemarkdown;
 
-use Illuminate\Console\Events\ArtisanStarting;
-use Illuminate\Console\Events\CommandStarting;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory;
 use MilesChou\Schemarkdown\Console\SchemaMarkdownCommand;
+use MilesChou\Schemarkdown\Console\SchemaModelCommand;
 use MilesChou\Schemarkdown\Engines\TemplateEngine;
-use MilesChou\Schemarkdown\Listeners\InitializeCommandOptions;
-use MilesChou\Schemarkdown\Listeners\InitializeConnection;
 
 class SchemarkdownServiceProvider extends ServiceProvider
 {
@@ -18,12 +14,6 @@ class SchemarkdownServiceProvider extends ServiceProvider
     {
         $this->registerViews();
         $this->registerCommand();
-    }
-
-    public function boot()
-    {
-        Event::listen(ArtisanStarting::class, InitializeCommandOptions::class);
-        Event::listen(CommandStarting::class, InitializeConnection::class);
     }
 
     private function registerViews(): void
@@ -41,13 +31,20 @@ class SchemarkdownServiceProvider extends ServiceProvider
 
     private function registerCommand(): void
     {
-        $this->app->singleton('command.schemarkdown', SchemaMarkdownCommand::class);
+        $this->app->singleton('command.schemarkdown.markdown', SchemaMarkdownCommand::class);
+        $this->app->singleton('command.schemarkdown.model', SchemaModelCommand::class);
 
-        $this->commands(['command.schemarkdown']);
+        $this->commands([
+            'command.schemarkdown.markdown',
+            'command.schemarkdown.model',
+        ]);
     }
 
     public function provides()
     {
-        return ['command.schemarkdown'];
+        return [
+            'command.schemarkdown.markdown',
+            'command.schemarkdown.model',
+        ];
     }
 }

@@ -13,7 +13,6 @@ class InitializeCommandOptions
 
         $event->artisan->getDefinition()->addOptions([
             new InputOption('--config-file', null, InputOption::VALUE_REQUIRED, 'Config file'),
-            new InputOption('--connection', null, InputOption::VALUE_REQUIRED, 'Connection name will only build'),
         ]);
     }
 }

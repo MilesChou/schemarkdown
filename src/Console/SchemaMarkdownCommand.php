@@ -22,8 +22,10 @@ class SchemaMarkdownCommand extends Command
      */
     protected $signature = 'schema:markdown
                                 {--memory-limit=-1 : MEMORY_LIMIT config}
+                                {--connection= : Connection name will only build}
                                 {--output-dir=docs/schema : Relative path with getcwd()}
-                                {--overwrite : Overwrite the exist file}';
+                                {--overwrite : Overwrite the exist file}
+                                ';
 
     public function handle(MarkdownGenerator $generator): int
     {
