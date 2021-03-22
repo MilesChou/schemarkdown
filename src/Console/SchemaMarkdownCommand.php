@@ -9,7 +9,7 @@ use MilesChou\Schemarkdown\Schema\MarkdownGenerator;
 
 class SchemaMarkdownCommand extends Command
 {
-    use Concerns\ConnectionConfig;
+    use Concerns\InitializeConnection;
     use Path;
 
     /**
@@ -22,6 +22,7 @@ class SchemaMarkdownCommand extends Command
      */
     protected $signature = 'schema:markdown
                                 {--memory-limit=-1 : MEMORY_LIMIT config}
+                                {--config-file=config/database.php : Config file}
                                 {--connection= : Connection name will only build}
                                 {--output-dir=docs/schema : Relative path with getcwd()}
                                 {--overwrite : Overwrite the exist file}
@@ -30,10 +31,14 @@ class SchemaMarkdownCommand extends Command
     public function handle(MarkdownGenerator $generator): int
     {
         $memoryLimit = $this->option('memory-limit');
+        $configFile = $this->option('config-file');
+        $connection = $this->option('connection');
         $outputDir = $this->option('output-dir');
         $overwrite = $this->option('overwrite');
 
         ini_set('memory_limit', $memoryLimit);
+
+        $this->initializeConnection($this->laravel, $configFile, $connection);
 
         $code = $generator->build();
 

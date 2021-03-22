@@ -5,7 +5,6 @@ use LaravelBridge\Scratch\Application as LaravelBridge;
 use MilesChou\Codegener\CodegenerServiceProvider;
 use MilesChou\Schemarkdown\Console\SchemaMarkdownCommand;
 use MilesChou\Schemarkdown\Console\SchemaModelCommand;
-use MilesChou\Schemarkdown\InitializeConnectionBootstrapper;
 use MilesChou\Schemarkdown\SchemarkdownServiceProvider;
 use org\bovigo\vfs\vfsStream;
 
@@ -16,7 +15,6 @@ return (static function () {
         ->setupViewCompiledPath(vfsStream::setup('view')->url())
         ->setupProvider(CodegenerServiceProvider::class)
         ->setupProvider(SchemarkdownServiceProvider::class)
-        ->setupProvider(InitializeConnectionBootstrapper::class)
         ->withFacades()
         ->bootstrap();
 
