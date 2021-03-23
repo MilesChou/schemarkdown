@@ -49,7 +49,7 @@
         },
         "laravel": {
             "providers": [
-                "InitializeConnectionServiceProvider"
+                "MilesChou\\Schemarkdown\\SchemarkdownServiceProvider"
             ]
         }
     },
