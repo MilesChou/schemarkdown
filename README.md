@@ -9,6 +9,8 @@
 
 The core library for generate Markdown document and Laravel Eloquent Model classes from database schema.
 
+![](docs/example.gif)
+
 ## Installation
 
 Use Composer to install:
