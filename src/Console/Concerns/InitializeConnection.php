@@ -9,34 +9,38 @@ use RuntimeException;
 
 trait InitializeConnection
 {
-    public function initializeConnection(Container $container, string $configFile, ?string $connection = null): void
+    public function initializeConnection(Container $container, string $configPath, ?string $database = null): void
     {
-        if (!$configFile) {
-            $configFile = 'config/database.php';
+        if (isset($container['config']['database.connections'])) {
+            $connections = $container['config']['database.connections'];
+        } else {
+            $connections = $this->resolveConfigFile($configPath);
         }
 
-        $connections = $this->resolveConfigFile($this->formatPath($configFile));
-
-        if ($connection && $this->connectionInConfig($connection, $connections)) {
-            $connections = Arr::only($connections, $connection);
+        if ($database && $this->databaseInConfig($database, $connections)) {
+            $connections = Arr::only($connections, $database);
         }
 
         $container['config']['database.connections'] = $connections;
 
         // Connect specified database
-        foreach ($connections as $name => $connection) {
+        foreach ($connections as $name => $database) {
             $container->make(DatabaseManager::class)
                 ->connection($name);
         }
     }
 
     /**
-     * @param string $configFile
+     * @param string $configPath
      * @return array
      */
-    private function resolveConfigFile(string $configFile): array
+    private function resolveConfigFile(string $configPath): array
     {
-        $config = require $configFile;
+        if (!$configPath) {
+            $configPath = 'config/database.php';
+        }
+
+        $config = require $this->formatPath($configPath);
 
         if (!isset($config['connections'])) {
             throw new RuntimeException("The key 'connections' is not set in config file");
@@ -51,9 +55,9 @@ trait InitializeConnection
         return $connections;
     }
 
-    private function connectionInConfig(string $connection, array $connections): bool
+    private function databaseInConfig(string $database, array $connections): bool
     {
-        if (!array_key_exists($connection, $connections)) {
+        if (!array_key_exists($database, $connections)) {
             throw new RuntimeException('Specify connection is not in config file');
         }
 
