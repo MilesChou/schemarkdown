@@ -23,8 +23,8 @@ class SchemaModelCommand extends Command
     protected $signature = 'schema:model
                                 {--database= : Connection name will only build}
                                 {--config=config/database.php : Config file}
-                                {--path=docs/schema : The path where the model file should be stored}
-                                {--namespace=App/Models : Namespace prefix}
+                                {--path=app/Models : The path where the model file should be stored}
+                                {--namespace=App\\Models : Namespace prefix}
                                 {--overwrite : Overwrite the exist file}
                                 {--memory-limit=-1 : memory limit config in php.ini}
                                 ';
