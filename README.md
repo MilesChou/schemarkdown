@@ -7,7 +7,7 @@
 [![Total Downloads](https://poser.pugx.org/MilesChou/schemarkdown/d/total.svg)](https://packagist.org/packages/MilesChou/schemarkdown)
 [![License](https://poser.pugx.org/MilesChou/schemarkdown/license)](https://packagist.org/packages/MilesChou/schemarkdown)
 
-The core library for generate Markdown document from database schema.
+The core library for generate Markdown document and Laravel Eloquent Model classes from database schema.
 
 ## Installation
 
@@ -22,14 +22,36 @@ composer require mileschou/schemarkdown
 Use following command to generate schema documents:
 
 ```bash
-php artisan schemarkdown
+cd /path/to/your-laravel-project
+php artisan schema:markdown
 ```
 
-Schema document will store in `docs/schema` directory default. Use the `--output-dir` option to change.
+Schema document are stored to `docs` directory default. Use the `--output-dir` option to change it.
 
-In the other framework, you must provide config file like Laravel. Use `--config-file` option to specify customize config file.
+In the other framework, you must provide config file like Laravel. Use `--config-file` option to specify customize configuration.
 
-Use the `--connection` option to specify **connection name** in Laravel config to generate documents of one database.
+This tool will load `.env` before load config. Use the `--env` option to specify .env path.
+
+Use the `--connection` option to specify **connection name** in Laravel config to generate the document of one database.
+
+Use the `--overwrite` option if you want to overwrite the exists document.
+
+---
+
+Use following command to generate eloquent models:
+
+```bash
+cd /path/to/your-laravel-project
+php artisan schema:model
+```
+
+It's will generate model code into `app/Models` directory (Laravel 8 default), use the `--output-dir` option can change output dir. If want to change namespace, use the `--namespace` option.
+
+In the other framework but using Eloquent ORM library, you must provide config file like laravel project. Use `--config-file` option to specify customize configuration.
+
+If only want build one connection, use the `--connection` option to specify.
+
+Use the `--overwrite` option if you want to overwrite exist code.
 
 ## Example
 
