@@ -15,41 +15,39 @@ class SchemaMarkdownCommand extends Command
     /**
      * @var string
      */
-    protected $description = 'Generate Markdown document from database schema';
+    protected $description = 'Generate Markdown document from the given database connection';
 
     /**
      * @var string
      */
     protected $signature = 'schema:markdown
-                                {--memory-limit=-1 : MEMORY_LIMIT config}
-                                {--config-file=config/database.php : Config file}
-                                {--connection= : Connection name will only build}
-                                {--output-dir=docs/schema : Relative path with getcwd()}
+                                {--database= : The database connection to use}
+                                {--config=config/database.php : Config file path}
+                                {--path=docs/schema : The path where the .md file should be stored}
                                 {--overwrite : Overwrite the exist file}
+                                {--memory-limit=-1 : memory limit config in php.ini}
                                 ';
 
-    public function handle(MarkdownGenerator $generator): int
+    public function handle(MarkdownGenerator $generator, Writer $writer): int
     {
-        $memoryLimit = $this->option('memory-limit');
-        $configFile = $this->option('config-file');
-        $connection = $this->option('connection');
-        $outputDir = $this->option('output-dir');
-        $overwrite = $this->option('overwrite');
+        $database = $this->option('database');
+        $config = $this->option('config');
+        $path = $this->option('path');
 
-        ini_set('memory_limit', $memoryLimit);
+        ini_set('memory_limit', $this->option('memory-limit'));
 
-        $this->initializeConnection($this->laravel, $configFile, $connection);
+        $this->initializeConnection($this->laravel, $config, $database);
 
         $code = $generator->build();
 
-        $this->output->success('All document build success, next will write files');
+        if ($this->output->isVerbose()) {
+            $this->comment('Building successfully');
+        }
 
-        /** @var Writer $writer */
-        $writer = $this->laravel->make(Writer::class);
-        $writer->appendBasePath($outputDir)
-            ->writeMass($code, $overwrite);
+        $writer->appendBasePath($path)
+            ->writeMass($code, $this->option('overwrite'));
 
-        $this->output->success('All document write success');
+        $this->info('Generate document successfully');
 
         return 0;
     }

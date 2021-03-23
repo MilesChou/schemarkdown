@@ -1,6 +1,6 @@
 {
     "name": "mileschou/schemarkdown",
-    "description": "The schema document generator",
+    "description": "The schema generate helper",
     "type": "library",
     "license": "MIT",
     "keywords": [

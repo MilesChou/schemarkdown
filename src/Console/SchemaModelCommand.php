@@ -15,36 +15,42 @@ class SchemaModelCommand extends Command
     /**
      * @var string
      */
-    protected $description = 'Generate eloquent model classes from database schema';
+    protected $description = 'Generate Eloquent Model classes from the given database schema';
 
     /**
      * @var string
      */
     protected $signature = 'schema:model
-                                {--memory-limit=-1 : MEMORY_LIMIT config}
-                                {--config-file=config/database.php : Config file}
-                                {--connection= : Connection name will only build}
-                                {--output-dir=app/Models : Relative path with getcwd()}
+                                {--database= : Connection name will only build}
+                                {--config=config/database.php : Config file}
+                                {--path=docs/schema : The path where the model file should be stored}
                                 {--namespace=App/Models : Namespace prefix}
                                 {--overwrite : Overwrite the exist file}
+                                {--memory-limit=-1 : memory limit config in php.ini}
                                 ';
 
-    public function handle(ModelGenerator $builder, Writer $writer)
+    public function handle(ModelGenerator $generator, Writer $writer): int
     {
-        $memoryLimit = $this->option('memory-limit');
-        $configFile = $this->option('config-file');
-        $connection = $this->option('connection');
-        $outputDir = $this->option('output-dir');
+        $database = $this->option('database');
+        $config = $this->option('config');
+        $path = $this->option('path');
         $namespace = $this->option('namespace');
-        $overwrite = $this->option('overwrite');
 
-        ini_set('memory_limit', $memoryLimit);
+        ini_set('memory_limit', $this->option('memory-limit'));
 
-        $this->initializeConnection($this->laravel, $configFile, $connection);
+        $this->initializeConnection($this->laravel, $config, $database);
 
-        $buildCode = $builder->setNamespace($namespace)->build();
+        $buildCode = $generator->setNamespace($namespace)->build();
 
-        $writer->appendBasePath($outputDir)
-            ->writeMass($buildCode, $overwrite);
+        if ($this->output->isVerbose()) {
+            $this->comment('Building successfully');
+        }
+
+        $writer->appendBasePath($path)
+            ->writeMass($buildCode, $this->option('overwrite'));
+
+        $this->info('Generate model successfully');
+
+        return 0;
     }
 }
