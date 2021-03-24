@@ -26,6 +26,8 @@ class PropertyGeneratorTest extends TestCase
             ['float', $this->createColumn('whatever', 'float')],
             ['string', $this->createColumn('whatever', 'string')],
             ['string', $this->createColumn('whatever', 'text')],
+            ['\\Carbon\\Carbon', $this->createColumn('whatever', 'date')],
+            ['\\Carbon\\Carbon', $this->createColumn('whatever', 'datetime')],
         ];
     }
 

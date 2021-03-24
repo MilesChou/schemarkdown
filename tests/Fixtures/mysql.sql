@@ -39,6 +39,16 @@ CREATE TABLE `should_return_string` (
   `longtext_field` LONGTEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE IF EXISTS `should_return_carbon`;
+
+CREATE TABLE `should_return_carbon` (
+  `date_field` DATE NOT NULL,
+  `datetime_field` DATETIME NOT NULL,
+  `timestamp_field` TIMESTAMP NOT NULL,
+  `datetime_field_with_null` DATETIME NULL,
+  `timestamp_field_with_null` TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 DROP TABLE IF EXISTS `test_for_pk`;
 
 CREATE TABLE `test_for_pk` (

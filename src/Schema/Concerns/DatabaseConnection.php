@@ -13,7 +13,7 @@ trait DatabaseConnection
     /**
      * @param Connection $connection
      * @return AbstractSchemaManager
-     * @throws \Doctrine\DBAL\Exception
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function resolveSchemaManger(Connection $connection): AbstractSchemaManager
     {

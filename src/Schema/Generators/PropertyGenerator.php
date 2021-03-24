@@ -9,7 +9,7 @@ class PropertyGenerator
     /**
      * @var array
      */
-    protected $mapping = [
+    private $mapping = [
         // boolean fields
         'boolean' => 'bool',
 
@@ -30,7 +30,8 @@ class PropertyGenerator
         'text' => 'string',
 
         // date and time fields
-        'dateTime' => '\\Carbon\\Carbon',
+        'date' => '\\Carbon\\Carbon',
+        'datetime' => '\\Carbon\\Carbon',
         'timestamps' => '\\Carbon\\Carbon',
     ];
 
