@@ -40,7 +40,6 @@ Desktop.ini
 /phpunit.xml
 
 # Artifacts files
-/app
 /build
 /docs/schema
 .phpunit.result.cache

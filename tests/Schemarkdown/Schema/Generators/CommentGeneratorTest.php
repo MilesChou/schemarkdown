@@ -20,7 +20,7 @@ class CommentGeneratorTest extends TestCase
     {
         parent::setUp();
 
-        $this->target = LaravelBridge::getInstance()->make(CommentGenerator::class);
+        $this->target = $this->app->make(CommentGenerator::class);
     }
 
     protected function tearDown(): void

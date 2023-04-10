@@ -79,13 +79,13 @@ jobs:
         run: php vendor/bin/phpcs
 
       - name: Execute tests
-        run: php vendor/bin/phpunit
+        run: php vendor/bin/pest
 
       - name: Execute schema:markdown tests
-        run: php bin/schemarkdown.php schema:markdown --config=tests/Fixtures/database.php
+        run: php schemarkdown schema:markdown --config=tests/Fixtures/database.php
 
       - name: Execute schema:model tests
-        run: php bin/schemarkdown.php schema:model --config=tests/Fixtures/database.php
+        run: php schemarkdown schema:model --config=tests/Fixtures/database.php
 
       - name: Code coverage
         uses: codecov/codecov-action@v3

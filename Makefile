@@ -17,10 +17,10 @@ check:
 	php vendor/bin/phpcs
 
 test: clean check
-	php vendor/bin/phpunit
+	php vendor/bin/pest
 
 test-fast: clean
-	php vendor/bin/phpunit
+	php vendor/bin/pest
 
 coverage: test
 	@if [ "`uname`" = "Darwin" ]; then open build/coverage/index.html; fi

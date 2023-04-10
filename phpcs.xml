@@ -19,4 +19,5 @@
 
     <exclude-pattern>src/templates</exclude-pattern>
     <exclude-pattern>src/Version.php</exclude-pattern>
+    <exclude-pattern>tests/Pest.php</exclude-pattern>
 </ruleset>
