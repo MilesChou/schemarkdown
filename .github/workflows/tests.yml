@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.0, 7.4, 7.3, 7.2 ]
+        php: [ 8.2, 8.1, 8.0 ]
         stability: [ prefer-lowest, prefer-stable ]
 
     services:
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Initializing MySQL examples data
         run: mysql -h127.0.0.1 -uroot -ppassword < ./examples/examples.sql
@@ -66,10 +66,10 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: composer:v2
-          coverage: none
+          coverage: xdebug
 
       - name: Install dependencies
-        uses: nick-invision/retry@v1
+        uses: nick-invision/retry@v2
         with:
           timeout_minutes: 5
           max_attempts: 5
@@ -79,7 +79,7 @@ jobs:
         run: php vendor/bin/phpcs
 
       - name: Execute tests
-        run: phpdbg -qrr vendor/bin/phpunit
+        run: php vendor/bin/phpunit
 
       - name: Execute schema:markdown tests
         run: php bin/schemarkdown.php schema:markdown --config=tests/Fixtures/database.php
@@ -88,4 +88,4 @@ jobs:
         run: php bin/schemarkdown.php schema:model --config=tests/Fixtures/database.php
 
       - name: Code coverage
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3

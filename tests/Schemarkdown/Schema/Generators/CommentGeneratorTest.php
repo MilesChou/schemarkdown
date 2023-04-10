@@ -48,7 +48,7 @@ class CommentGeneratorTest extends TestCase
         $this->assertStringContainsString('float field_c', $actual);
 
         // Should remove tail space
-        $this->assertNotRegExp('/\\s+\n/', $actual);
+        $this->assertDoesNotMatchRegularExpression('/\\s+\n/', $actual);
     }
 
     /**

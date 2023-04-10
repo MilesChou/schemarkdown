@@ -17,10 +17,10 @@ check:
 	php vendor/bin/phpcs
 
 test: clean check
-	phpdbg -qrr vendor/bin/phpunit
+	php vendor/bin/phpunit
 
 test-fast: clean
-	phpdbg -qrr vendor/bin/phpunit
+	php vendor/bin/phpunit
 
 coverage: test
 	@if [ "`uname`" = "Darwin" ]; then open build/coverage/index.html; fi
