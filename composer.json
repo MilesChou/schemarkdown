@@ -17,21 +17,22 @@
     "require": {
         "php": "^8.0",
         "doctrine/dbal": "^2.6",
-        "illuminate/console": "^8 | ^9 | ^10",
-        "illuminate/database": "^8 | ^9 | ^10",
-        "illuminate/events": "^8 | ^9 | ^10",
-        "illuminate/support": "^8 | ^9 | ^10",
-        "illuminate/view": "^8 | ^9 | ^10",
+        "illuminate/console": "^8 | ^9 | ^10 | ^11",
+        "illuminate/database": "^8 | ^9 | ^10 | ^11",
+        "illuminate/events": "^8 | ^9 | ^10 | ^11",
+        "illuminate/support": "^8 | ^9 | ^10 | ^11",
+        "illuminate/view": "^8 | ^9 | ^10 | ^11",
         "mikey179/vfsstream": "^1.6.7",
         "mileschou/codegener": "^2.0"
     },
     "require-dev": {
-        "illuminate/container": "^8 | ^9 | ^10",
-        "laravel-zero/framework": "^8.10 | ^9 | ^10",
+        "ext-pdo": "*",
+        "illuminate/container": "^8 | ^9 | ^10 | ^11",
+        "laravel-zero/framework": "^8.10 | ^9 | ^10 | ^11",
         "pestphp/pest": "^1.22",
         "phpunit/phpunit": "^9.6",
         "psy/psysh": "^0.11.15",
-        "squizlabs/php_codesniffer": "^3.7",
+        "squizlabs/php_codesniffer": "^3.10.2",
         "symfony/var-dumper": "^6"
     },
     "autoload": {

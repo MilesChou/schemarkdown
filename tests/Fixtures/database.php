@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'default' => env('DB_CONNECTION', 'dummy'),
+
     'connections' => [
         'examples' => [
             'driver' => 'mysql',

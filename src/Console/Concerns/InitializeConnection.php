@@ -11,11 +11,7 @@ trait InitializeConnection
 {
     public function initializeConnection(Container $container, string $configPath, ?string $database = null): void
     {
-        if (isset($container['config']['database.connections'])) {
-            $connections = $container['config']['database.connections'];
-        } else {
-            $connections = $this->resolveConfigFile($configPath);
-        }
+        $connections = $this->resolveConfigFile($configPath);
 
         if ($database && $this->databaseInConfig($database, $connections)) {
             $connections = Arr::only($connections, $database);
