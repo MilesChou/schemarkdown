@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.3, 8.2, 8.1, 8.0 ]
+        php: [ "8.3", "8.2", "8.1", "8.0" ]
         stability: [ prefer-lowest, prefer-stable ]
 
     services:
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Initializing MySQL examples data
         run: mysql -h127.0.0.1 -uroot -ppassword < ./examples/examples.sql
@@ -67,12 +67,24 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2
           coverage: xdebug
+          ini-values: error_reporting=E_ALL
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-
 
       - name: Install dependencies
-        uses: nick-invision/retry@v2
+        uses: nick-fields/retry@v3
         with:
-          timeout_minutes: 5
-          max_attempts: 5
+          timeout_minutes: 1
+          max_attempts: 3
           command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
       - name: Execute phpcs
@@ -88,4 +100,4 @@ jobs:
         run: php schemarkdown schema:model --config=tests/Fixtures/database.php
 
       - name: Code coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
